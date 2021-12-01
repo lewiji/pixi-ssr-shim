@@ -8,7 +8,6 @@ if (typeof document === 'undefined') {
   if (window.document) {
     globalThis.document = window.document;
   } else {
-    // @ts-expect-error - the actual browser `window.document` is read-only
     globalThis.document = window.document = {
       createElement: (elementName: string) => {
           switch (elementName) {
@@ -32,6 +31,9 @@ if (typeof document === 'undefined') {
           }
         },
     } as any;
+  }
+  if (typeof CanvasRenderingContext2D === 'undefined') {
+    globalThis.CanvasRenderingContext2D = { prototype: {} as CanvasRenderingContext2D } as any;
   }
 }
 
